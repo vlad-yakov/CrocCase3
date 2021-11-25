@@ -13,4 +13,26 @@
       <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="obj\Api.csproj.nuget.dgspec.json" />
+      <Content Include="obj\Debug\net5.0\Api.AssemblyInfoInputs.cache" />
+      <Content Include="obj\Debug\net5.0\Api.assets.cache" />
+      <Content Include="obj\Debug\net5.0\Api.csproj.AssemblyReference.cache" />
+      <Content Include="obj\Debug\net5.0\Api.csproj.CoreCompileInputs.cache" />
+      <Content Include="obj\Debug\net5.0\Api.csproj.FileListAbsolute.txt" />
+      <Content Include="obj\Debug\net5.0\Api.GeneratedMSBuildEditorConfig.editorconfig" />
+      <Content Include="obj\Debug\net5.0\Api.genruntimeconfig.cache" />
+      <Content Include="obj\Debug\net5.0\Api.MvcApplicationPartsAssemblyInfo.cache" />
+      <Content Include="obj\Debug\net5.0\Api.RazorTargetAssemblyInfo.cache" />
+      <Content Include="obj\project.assets.json" />
+      <Content Include="obj\project.nuget.cache" />
+      <Content Include="obj\project.packagespec.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="obj\Debug\net5.0\.NETCoreApp,Version=v5.0.AssemblyAttributes.cs" />
+      <Compile Include="obj\Debug\net5.0\Api.MvcApplicationPartsAssemblyInfo.cs" />
+      <Compile Remove="Controllers\AddElems\AddEventController.cs" />
+    </ItemGroup>
+
 </Project>

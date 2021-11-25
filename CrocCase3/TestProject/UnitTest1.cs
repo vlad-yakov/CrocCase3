@@ -1,4 +1,5 @@
 using DataModel.Models;
+using DataModel.Models.User;
 using NUnit.Framework;
 using Services.UseCases.AddElem;
 using Services.UseCases.RemoveElem;
@@ -17,12 +18,12 @@ namespace TestProject
         {
             var user = new UserModel
             {
-                FullName = "Anton",
+                FullName = "Vlad",
                 Email = "@gmail.com"
             };
 
-            var addElem = new RemoveUser();
-            addElem.TryExecute(1);
+            var addElem = new AddUser();
+            addElem.TryExecute(user);
         }
     }
 }

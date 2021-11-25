@@ -1,4 +1,7 @@
-﻿namespace Services.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Services.Models
 {
     /// <summary>
     /// Описывает модель выходных данных данных.
@@ -13,6 +16,6 @@
         /// <summary>
         /// Причина неудачного выполнения задания.
         /// </summary>
-        public string Reason { get; set; }
+        public List<string> Reason { get; } = new();
     }
 }

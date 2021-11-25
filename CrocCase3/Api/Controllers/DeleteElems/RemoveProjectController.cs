@@ -9,13 +9,6 @@ namespace Api.Controllers.DeleteElems
     [Route("RemoveProject")]
     public class RemoveProjectController : ControllerBase
     {
-        private readonly ILogger<RemoveProjectController> _logger;
-
-        public RemoveProjectController(ILogger<RemoveProjectController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpPut]
         public SuccessMessage Get(int projectId)
         {

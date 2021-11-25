@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataModel;
 using DataModel.Models;
+using DataModel.Models.Project;
 using Services.Models;
 
 namespace Services.UseCases.GetElem
