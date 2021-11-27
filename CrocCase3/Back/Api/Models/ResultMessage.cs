@@ -9,7 +9,7 @@
         /// <summary>
         /// Успешность выполненого запроса.
         /// </summary>
-        public SuccessMessage Success { get; set; }
+        public SuccessMessage Success { get; set; } = new();
         
         /// <summary>
         /// Выводимая информация.
