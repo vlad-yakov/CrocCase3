@@ -1,10 +1,10 @@
 ﻿using System;
+using Api.Models;
 using DataModel.Models;
 using DataModel.Models.Duty;
 using DataModel.Models.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Services.Models;
 using Services.UseCases.AddElem;
 
 namespace Api.Controllers.AddElems
@@ -22,9 +22,10 @@ namespace Api.Controllers.AddElems
         /// <param name="start">Имя пользователя.</param>
         /// <param name="end">Почта для связи с данным пользователем.</param>
         /// <param name="linkerId">Телефон для связи с данным пользователем.</param>
+        /// <param name="token">Токен пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        public SuccessMessage Get(DateTime start, DateTime end, int linkerId)
+        public ResultMessage<int> Get(DateTime start, DateTime end, int linkerId, string token)
         {
             var duty = new DutyModel
             {
@@ -33,19 +34,20 @@ namespace Api.Controllers.AddElems
                 LinkerId = linkerId
             };
             
-            var result = new SuccessMessage();
+            var result = new ResultMessage<int>();
             try
             {
                 var dutyAddService = new AddDuty();
-                result = dutyAddService.TryExecute(duty);
+                result.Result = dutyAddService.TryExecute(duty);
 
             }
             catch (Exception e)
             {
-                result.Success = false;
-                result.Reason.Add(e.Message);
+                result.Success.Success = false;
+                result.Success.Reason.Add(e.Message);
             }
-            
+
+            result.Success.Success = true;
             return result;
         }
     }

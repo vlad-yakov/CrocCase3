@@ -46,6 +46,11 @@ namespace DataModel.Models.Linker
         public UserModel User { get; set; }
         
         /// <summary>
+        /// Показывает удалили ли элемент.
+        /// </summary>
+        public bool Deleted { get; set; }
+        
+        /// <summary>
         /// Список смен, связанных с этой строкой.
         /// </summary>
         public List<DutyModel> Duty { get; set; }

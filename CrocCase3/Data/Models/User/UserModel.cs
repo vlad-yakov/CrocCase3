@@ -39,21 +39,13 @@ namespace DataModel.Models.User
         public string Password { get; set; }
         
         /// <summary>
+        /// Показывает удалили ли элемент.
+        /// </summary>
+        public bool Deleted { get; set; }
+        
+        /// <summary>
         /// Список строк из линкера, связанных с данным пользователем.
         /// </summary>
-        public List<LinkerUserProject> Linker { get; set; } 
+        public List<LinkerUserProject> Linker { get; set; }
     }
-    
-    // public class UserRole : IEntityTypeConfiguration<UserModel>
-    // {
-    //
-    //     public void Configure(EntityTypeBuilder<UserModel> builder)
-    //     {
-    //         builder.HasKey(link => link.Id);
-    //
-    //         HasRequired(link => link.ConfigurationModel).WithMany(module => module.Links).HasForeignKey(link => link.ConfigurationId);
-    //         HasRequired(link => link.Version).WithMany(module => module.Links).HasForeignKey(link => link.VersionId);
-    //         
-    //     }
-    // }
 }

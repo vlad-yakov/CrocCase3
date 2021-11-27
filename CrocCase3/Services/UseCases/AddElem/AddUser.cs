@@ -3,8 +3,6 @@
     using DataModel;
     using DataModel.Models.User;
 
-    using Models;
-
     /// <summary>
     /// Добавляет пользователя в базу данных в соответствующую таблицу (Users).
     /// </summary>
@@ -14,8 +12,8 @@
         /// Выполнить действие, подразумеваемое в описании Обьекта.
         /// </summary>
         /// <param name="user">Информация о пользователе.</param>
-        /// <returns>Результат выполнения действия.</returns>
-        public SuccessMessage TryExecute(UserModel user)
+        /// <returns>Идентификатор добавленного элемента.</returns>
+        public int TryExecute(UserModel user)
         {
             if (string.IsNullOrEmpty(user.FullName))
                 throw new UseCaseException("Имя пользователя не может быть пустым.");
@@ -32,16 +30,10 @@
 
             using (var db = new DataContext())
             {
-                db.Users.Add(user);
+                var addedElem = db.Users.Add(user);
                 db.SaveChanges();
+                return addedElem.Entity.Id;
             }
-
-            var result = new SuccessMessage
-            {
-                Success = true
-            };
-            
-            return result;
         }
     }
 }

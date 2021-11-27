@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using DataModel;
-using DataModel.Models;
 using DataModel.Models.User;
-using Services.Models;
 
 namespace Services.UseCases.GetElem
 {

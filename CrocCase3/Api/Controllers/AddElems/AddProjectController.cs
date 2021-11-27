@@ -1,9 +1,9 @@
 ﻿using System;
+using Api.Models;
 using DataModel.Models;
 using DataModel.Models.Project;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Services.Models;
 using Services.UseCases.AddElem;
 
 namespace Api.Controllers.AddElems
@@ -22,9 +22,10 @@ namespace Api.Controllers.AddElems
         /// <param name="beginDate">Дата начала проекта.</param>
         /// <param name="endDate">Дата окончания проекта.</param>
         /// <param name="daysPerWeek">Рабочих дней в неделе.</param>
+        /// <param name="token">Токен пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
-        [HttpPut]
-        public SuccessMessage Get(string name, DateTime beginDate, DateTime endDate,  int daysPerWeek)
+        [HttpGet]
+        public ResultMessage<int> Get(string name, DateTime beginDate, DateTime endDate, int daysPerWeek, string token)
         {
             var project = new ProjectModel
             {
@@ -34,18 +35,19 @@ namespace Api.Controllers.AddElems
                 DaysPerWeek = daysPerWeek
             };
 
-            var result = new SuccessMessage();
+            var result = new ResultMessage<int>();
             try
             {
                 var projectAddService = new AddProject();
-                result = projectAddService.TryExecute(project);
+                result.Result = projectAddService.TryExecute(project);
             }
             catch (Exception e)
             {
-                result.Success = false;
-                result.Reason.Add(e.Message);
+                result.Success.Success = false;
+                result.Success.Reason.Add(e.Message);
             }
-            
+
+            result.Success.Success = true;
             return result;
         }
     }

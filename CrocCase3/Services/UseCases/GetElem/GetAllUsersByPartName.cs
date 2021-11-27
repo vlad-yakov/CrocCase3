@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DataModel;
-using DataModel.Models;
 using DataModel.Models.User;
-using Services.Models;
+using Api;
 
 namespace Services.UseCases.GetElem
 {
@@ -18,7 +16,7 @@ namespace Services.UseCases.GetElem
         /// </summary>
         /// <param name="partFullName">Часть полниго имени для поиска.</param>
         /// <returns>Результат выполнения действия.</returns>
-        public IEnumerable<UserModel> TryExecute(string partFullName)
+        public IEnumerable<UserReturnModel> TryExecute(string partFullName)
         {
             List<UserModel> result = new();
             using (DataContext db = new DataContext())

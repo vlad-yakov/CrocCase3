@@ -1,12 +1,11 @@
 ﻿using System;
-using DataModel.Models.Linker;
 
-namespace DataModel.Models.Duty
+namespace Api.Models
 {
     /// <summary>
-    /// Описывает смену.
+    /// Описывает смену для возврата.
     /// </summary>
-    public class DutyModel
+    public class DutyReturnModel
     {
         /// <summary>
         /// Идентификатор смены.
@@ -32,15 +31,5 @@ namespace DataModel.Models.Duty
         /// Конец смены.
         /// </summary>
         public DateTime Finish { get; set; }
-        
-        /// <summary>
-        /// Показывает удалили ли элемент.
-        /// </summary>
-        public bool Deleted { get; set; }
-        
-        /// <summary>
-        /// Связанный линкер.
-        /// </summary>
-        public LinkerUserProject Linker { get; set; }
     }
 }

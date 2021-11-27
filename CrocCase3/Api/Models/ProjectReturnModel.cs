@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using DataModel.Models.Linker;
 
-namespace DataModel.Models.Project
+namespace Api.Models
 {
     /// <summary>
-    /// Описывает проект.
+    /// Описывает проект для возврата.
     /// </summary>
-    public class ProjectModel
+    public class ProjectReturnModel
     {
         /// <summary>
         /// Идентификатор проекта.
@@ -33,15 +31,5 @@ namespace DataModel.Models.Project
         /// Количество рабочих дней в неделю в проекте. 
         /// </summary>
         public int DaysPerWeek { get; set; }
-        
-        /// <summary>
-        /// Показывает удалили ли элемент.
-        /// </summary>
-        public bool Deleted { get; set; }
-        
-        /// <summary>
-        /// Список связанных записей в линкере с этим проектом.
-        /// </summary>
-        public List<LinkerUserProject> Linker { get; set; }
     }
 }

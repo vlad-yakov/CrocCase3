@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Services.Models
+namespace Api.Models
 {
     /// <summary>
     /// Описывает модель выходных данных данных.

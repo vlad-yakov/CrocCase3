@@ -1,9 +1,9 @@
 ﻿using System;
+using Api.Models;
 using DataModel.Models;
 using DataModel.Models.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Services.Models;
 using Services.UseCases.AddElem;
 
 namespace Api.Controllers.AddElems
@@ -23,9 +23,10 @@ namespace Api.Controllers.AddElems
         /// <param name="phone">Телефон для связи с данным пользователем.</param>
         /// <param name="login">Логин пользователя.</param>
         /// <param name="password">Пароль пользователя.</param>
+        /// <param name="token">Токен пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        public SuccessMessage Get(string name, string email, string phone, string login, string password)
+        public ResultMessage<int> Get(string name, string email, string phone, string login, string password, string token)
         {
             var user = new UserModel
             {
@@ -36,19 +37,20 @@ namespace Api.Controllers.AddElems
                 Password = password,
             };
             
-            var result = new SuccessMessage();
+            var result = new ResultMessage<int>();
             try
             {
                 var userAddService = new AddUser();
-                result = userAddService.TryExecute(user);
+                result.Result = userAddService.TryExecute(user);
 
             }
             catch (Exception e)
             {
-                result.Success = false;
-                result.Reason.Add(e.Message);
+                result.Success.Success = false;
+                result.Success.Reason.Add(e.Message);
             }
-            
+
+            result.Success.Success = true;
             return result;
         }
     }

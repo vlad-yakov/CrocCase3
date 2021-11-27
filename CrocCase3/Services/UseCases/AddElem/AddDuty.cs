@@ -3,7 +3,6 @@
 namespace Services.UseCases.AddElem
 {
     using DataModel;
-    using Models;
 
     /// <summary>
     /// Добавляет смену в базу данных в соответствующую таблицу (Duties).
@@ -14,8 +13,8 @@ namespace Services.UseCases.AddElem
         /// Выполнить действие, подразумеваемое в описании Обьекта.
         /// </summary>
         /// <param name="duty">Информация о смене.</param>
-        /// <returns>Результат выполнения действия.</returns>
-        public SuccessMessage TryExecute(DutyModel duty)
+        /// <returns>Идентификатор добавленного элемента.</returns>
+        public int TryExecute(DutyModel duty)
         {
             if (duty.Start == null)
                 throw new UseCaseException("Дата начала смены не может быть пустой.");
@@ -28,16 +27,10 @@ namespace Services.UseCases.AddElem
 
             using (var db = new DataContext())
             {
-                db.Duties.Add(duty);
+                var addedElem = db.Duties.Add(duty);
                 db.SaveChanges();
+                return addedElem.Entity.Id;
             }
-
-            var result = new SuccessMessage
-            {
-                Success = true
-            };
-            
-            return result;
         }
     }
 }
