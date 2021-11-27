@@ -2,7 +2,6 @@
 using System.Linq;
 using DataModel;
 using DataModel.Models.User;
-using Api;
 
 namespace Services.UseCases.GetElem
 {
@@ -16,7 +15,7 @@ namespace Services.UseCases.GetElem
         /// </summary>
         /// <param name="partFullName">Часть полниго имени для поиска.</param>
         /// <returns>Результат выполнения действия.</returns>
-        public IEnumerable<UserReturnModel> TryExecute(string partFullName)
+        public IEnumerable<UserModel> TryExecute(string partFullName)
         {
             List<UserModel> result = new();
             using (DataContext db = new DataContext())
