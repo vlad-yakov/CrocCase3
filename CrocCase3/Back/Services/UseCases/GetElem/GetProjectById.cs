@@ -1,43 +1,37 @@
 ﻿using System.Linq;
 using DataModel;
+using DataModel.Models.Project;
 using DataModel.Models.User;
 
 namespace Services.UseCases.GetElem
 {
     /// <summary>
-    /// Возвращает пользователя с данным идентификатором.
+    /// Возвращает проект с переданным идектификатором.
     /// </summary>
-    public class GetUserById
+    public class GetProjectById
     {
         /// <summary>
         /// Выполнить действие, подразумеваемое в описании Обьекта.
         /// </summary>
-        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <param name="projectId">Идентификатор проекта.</param>
         /// <returns>Результат выполнения действия.</returns>
-        public UserModel TryExecute(int userId)
+        public ProjectModel TryExecute(int projectId)
         {
-            if (userId < 0)
+            if (projectId < 0)
                 throw new UseCaseException("Идентификатор не может быть меньше.");
             
-            var result = new UserModel();
+            var result = new ProjectModel();
             using (var db = new DataContext())
             {
-                var userElem = db.Users
-                    .Where(e => e.Id == userId)
-                    .Select(e => new UserModel
-                    {
-                        Id = e.Id,
-                        FullName = e.FullName,
-                        Email = e.Email,
-                        Phone = e.Phone
-                    })
+                var projectElem = db.Projects
+                    .Where(e => e.Id == projectId)
                     .ToList()
                     .FirstOrDefault();
 
-                if (userElem == null)
+                if (projectElem == null)
                     throw new UseCaseException("Не удалось найти пользователя по данному идентификатору.");
                 
-                result = userElem;
+                result = projectElem;
             }
             
             return result;

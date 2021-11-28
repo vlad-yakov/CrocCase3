@@ -19,7 +19,6 @@ namespace Api.Controllers.DeleteElems
         /// <param name="token">Токен пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        [Route("RemoveProject")]
         public SuccessMessage Get(int projectId, string token)
         {
             var result = new SuccessMessage();

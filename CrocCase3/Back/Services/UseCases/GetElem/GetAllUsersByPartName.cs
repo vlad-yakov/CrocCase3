@@ -18,17 +18,10 @@ namespace Services.UseCases.GetElem
         public IEnumerable<UserModel> TryExecute(string partFullName)
         {
             List<UserModel> result = new();
-            using (DataContext db = new DataContext())
+            using (var db = new DataContext())
             {
                 var userElems = db.Users
-                    .Where(e => e.FullName.ToLower().Contains(partFullName.ToLower()))
-                    .Select(e => new UserModel
-                    {
-                        Id = e.Id,
-                        FullName = e.FullName,
-                        Email = e.Email,
-                        Phone = e.Phone
-                    });
+                    .Where(e => e.FullName.ToLower().Contains(partFullName.ToLower()));
                 
                 result.AddRange(userElems);
             }

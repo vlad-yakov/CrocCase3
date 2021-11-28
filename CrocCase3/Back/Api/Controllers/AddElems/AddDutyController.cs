@@ -45,6 +45,7 @@ namespace Api.Controllers.AddElems
             {
                 result.Success.Success = false;
                 result.Success.Reason.Add(e.Message);
+                return result;
             }
 
             result.Success.Success = true;

@@ -26,15 +26,10 @@ namespace DataModel.Models.Linker
         public int UserId { get; set; }
         
         /// <summary>
-        /// Роль пользователя в проекте.
+        /// Роль пользователя в проекте.(0 - участник проекта, 99 - администратор проекта)
         /// </summary>
         public int RoleType { get; set; }
-        
-        /// <summary>
-        /// Цвет пользователя в проекте.
-        /// </summary>
-        public string Color { get; set; }
-        
+
         /// <summary>
         /// Связанный проект.
         /// </summary>

@@ -24,5 +24,10 @@
         /// Телефон пользователя.
         /// </summary>
         public string Phone { get; set; }
+        
+        /// <summary>
+        /// Цвет пользователя.
+        /// </summary>
+        public string Color { get; set; }
     }
 }

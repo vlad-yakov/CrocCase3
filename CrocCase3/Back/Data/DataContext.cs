@@ -32,7 +32,7 @@ namespace DataModel
  
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=LAPTOP-MTELQ77I;database=CrocCase3v5;uid=root;password=root;");
+            optionsBuilder.UseSqlServer("server=LAPTOP-MTELQ77I;database=CrocCase3v7;uid=root;password=root;");
         }
     }
 }

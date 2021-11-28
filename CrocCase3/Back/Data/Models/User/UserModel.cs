@@ -29,6 +29,11 @@ namespace DataModel.Models.User
         public string Phone { get; set; }
         
         /// <summary>
+        /// Цвет пользователя.
+        /// </summary>
+        public string Color { get; set; }
+        
+        /// <summary>
         /// Логин пользователя для авторизации.
         /// </summary>
         public string Login { get; set; }

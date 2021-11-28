@@ -26,7 +26,9 @@
 
             if (string.IsNullOrEmpty(user.Email) && string.IsNullOrEmpty(user.Phone))
                 throw new UseCaseException("Необходимо указать хотя бы один вид информации для связи.");
-
+            
+            if (string.IsNullOrEmpty(user.Color))
+                throw new UseCaseException("Необходимо указать цвет пользователя.");
 
             using (var db = new DataContext())
             {

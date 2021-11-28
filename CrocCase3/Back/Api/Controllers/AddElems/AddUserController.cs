@@ -22,17 +22,19 @@ namespace Api.Controllers.AddElems
         /// <param name="email">Почта для связи с данным пользователем.</param>
         /// <param name="phone">Телефон для связи с данным пользователем.</param>
         /// <param name="login">Логин пользователя.</param>
+        /// <param name="color">Цвет пользователя.</param>
         /// <param name="password">Пароль пользователя.</param>
         /// <param name="token">Токен пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        public ResultMessage<int> Get(string name, string email, string phone, string login, string password, string token)
+        public ResultMessage<int> Get(string name, string email, string phone, string color, string login, string password, string token)
         {
             var user = new UserModel
             {
                 FullName = name,
                 Email = email,
                 Phone = phone,
+                Color = color,
                 Login = login,
                 Password = password,
             };

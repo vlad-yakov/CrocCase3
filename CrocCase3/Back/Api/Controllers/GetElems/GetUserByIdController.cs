@@ -7,7 +7,7 @@ using Services.UseCases.GetElem;
 namespace Api.Controllers.GetElems
 {
     /// <summary>
-    /// Контроллер, возвращающий все пользователей по совпадению передаваемой строки с полным именем.
+    /// Контроллер, возвращающий пользователя с данным идентификатором..
     /// </summary>
     [ApiController]
     [Route("GetUserById")]
@@ -16,7 +16,7 @@ namespace Api.Controllers.GetElems
         /// <summary>
         /// Получить ответ от сервера.
         /// </summary>
-        /// <param name="partFullName">Часть имени пользователя.</param>
+        /// <param name="userId">Идентификатор пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
         public ResultMessage<UserReturnModel> Get(int userId)
@@ -31,7 +31,8 @@ namespace Api.Controllers.GetElems
                     Id = user.Id,
                     Email = user.Email,
                     FullName = user.FullName,
-                    Phone = user.Phone
+                    Phone = user.Phone,
+                    Color = user.Color
                 };
             }
             catch (Exception e)

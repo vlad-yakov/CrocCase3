@@ -9,26 +9,26 @@ using Services.UseCases.GetElem;
 namespace Api.Controllers.GetElems
 {
     /// <summary>
-    /// Контроллер, возвращающий всех пользователей по совпадению передаваемой строки с полным именем.
+    /// Контроллер, возвращающий всех пользователей состоящих в проэкте с данным идентификатором (Linker).
     /// </summary>
     [ApiController]
-    [Route("GetAllUsersByPartName")]
-    public class GetAllUsersByPartNameController : ControllerBase
+    [Route("GetAllUsersByProjectId")]
+    public class GetAllUsersByProjectIdController : ControllerBase
     {
         /// <summary>
         /// Получить ответ от сервера.
         /// </summary>
-        /// <param name="partFullName">Часть имени пользователя.</param>
+        /// <param name="projectId">Идентификатор проекта.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        public ResultMessage<List<UserReturnModel>> Get(string partFullName)
+        public ResultMessage<List<UserReturnModel>> Get(int projectId)
         {
             ResultMessage<List<UserReturnModel>> result = new(); 
             try
             {
-                var usersGetByPartNameService = new GetAllUsersByPartFullName();
-                result.Result = usersGetByPartNameService
-                    .TryExecute(partFullName)
+                var usersGetByProjectIdService = new GetAllUsersByProjectId();
+                result.Result = usersGetByProjectIdService
+                    .TryExecute(projectId)
                     .Select(user => new UserReturnModel
                     {
                         Id = user.Id,

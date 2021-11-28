@@ -6,7 +6,7 @@ namespace Services.UseCases.RemoveElem
     {
         public void TryExecute(int projectId)
         {
-            using (DataContext db = new DataContext())
+            using (var db = new DataContext())
             {
                 var project = db.Projects.Find(projectId);
 
