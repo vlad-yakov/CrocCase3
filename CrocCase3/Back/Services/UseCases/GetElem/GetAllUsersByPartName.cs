@@ -21,7 +21,7 @@ namespace Services.UseCases.GetElem
             using (var db = new DataContext())
             {
                 var userElems = db.Users
-                    .Where(e => e.FullName.ToLower().Contains(partFullName.ToLower()));
+                    .Where(user => user.FullName.ToLower().Contains(partFullName.ToLower()) && !user.Deleted);
                 
                 result.AddRange(userElems);
             }

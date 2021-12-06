@@ -1,12 +1,13 @@
-﻿using DataModel;
+﻿using System.Linq;
+using DataModel;
 using Services.UseCases.AuthorizeAndCheckPermissions;
 
 namespace Services.UseCases.RemoveElem
 {
     /// <summary>
-    /// Удаляет(скрывает) проект.
+    /// Удаляет(скрывает) пользователя в проекте.
     /// </summary>
-    public class RemoveProject
+    public class RemoveLinkerById
     {
         /// <summary>
         /// Выполнить действие, подразумеваемое в описании Обьекта.
@@ -14,8 +15,14 @@ namespace Services.UseCases.RemoveElem
         /// <param name="projectId">Идентификатор проекта.</param>
         /// <param name="login">Логин пользователя</param>
         /// <exception cref="UseCaseException"></exception>
-        public void TryExecute(int projectId, string login)
+        public void TryExecute(int linkerId, string login)
         {
+            int projectId;
+            using (var db = new DataContext())
+            {
+                projectId = db.Linker.FirstOrDefault(linker => linker.Id == linkerId).ProjectId;
+            }
+            
             var sysAdmin = new CheckSystemAdminByLogin().TryExecute(login);
             var projectAdmin = new CheckCurrentProjectAdminByLogin().TryExecute(login, projectId);
             
@@ -24,13 +31,13 @@ namespace Services.UseCases.RemoveElem
 
             using (var db = new DataContext())
             {
-                var project = db.Projects.Find(projectId);
+                var linker = db.Linker.Find(linkerId);
 
-                if (project == null)
+                if (linker == null)
                     throw new UseCaseException("Не удалось найти элемент по заданному идентификатору.");
 
-                project.Deleted = true;
-                db.Update(project);
+                linker.Deleted = true;
+                db.Update(linker);
                 db.SaveChanges();
             }
         }

@@ -24,7 +24,7 @@ namespace Services.UseCases.GetElem
             using (var db = new DataContext())
             {
                 var projectElem = db.Projects
-                    .Where(e => e.Id == projectId)
+                    .Where(project => project.Id == projectId && !project.Deleted)
                     .ToList()
                     .FirstOrDefault();
 

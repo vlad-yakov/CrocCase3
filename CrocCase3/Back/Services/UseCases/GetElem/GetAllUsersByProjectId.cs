@@ -22,7 +22,7 @@ namespace Services.UseCases.GetElem
             using (var db = new DataContext())
             {
                 var users = db.Linker
-                    .Where(linker => linker.ProjectId == projectId)
+                    .Where(linker => linker.ProjectId == projectId && !linker.Deleted)
                     .Include(c => c.User)
                     .Select(x => x.User);
 

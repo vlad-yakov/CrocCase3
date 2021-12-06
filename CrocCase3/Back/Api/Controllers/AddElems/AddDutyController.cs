@@ -1,4 +1,5 @@
 ﻿using System;
+using Api.Controllers.Authorize;
 using Api.Models;
 using DataModel.Models;
 using DataModel.Models.Duty;
@@ -37,9 +38,10 @@ namespace Api.Controllers.AddElems
             var result = new ResultMessage<int>();
             try
             {
+                var userLogin = new TokenOperations().CheckToken(token);
                 var dutyAddService = new AddDuty();
-                result.Result = dutyAddService.TryExecute(duty);
-
+                result.Result = dutyAddService.TryExecute(duty, userLogin);
+                result.Success.Success = true;
             }
             catch (Exception e)
             {
@@ -48,7 +50,6 @@ namespace Api.Controllers.AddElems
                 return result;
             }
 
-            result.Success.Success = true;
             return result;
         }
     }

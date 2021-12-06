@@ -1,4 +1,6 @@
-﻿namespace Services.UseCases.AddElem
+﻿using Services.UseCases.AuthorizeAndCheckPermissions;
+
+namespace Services.UseCases.AddElem
 {
     using DataModel;
     using DataModel.Models.User;
@@ -11,10 +13,14 @@
         /// <summary>
         /// Выполнить действие, подразумеваемое в описании Обьекта.
         /// </summary>
-        /// <param name="user">Информация о пользователе.</param>
+        /// <param name="user">Информация о новом пользователе.</param>
+        /// <param name="userLogin">Логин добавляющего пользователя.</param>
         /// <returns>Идентификатор добавленного элемента.</returns>
-        public int TryExecute(UserModel user)
+        public int TryExecute(UserModel user, string userLogin)
         {
+            // if (!new CheckSystemAdminByLogin().TryExecute(userLogin))
+            //     throw new UseCaseException("Недостаточно прав на выполнение данного действия.");
+
             if (string.IsNullOrEmpty(user.FullName))
                 throw new UseCaseException("Имя пользователя не может быть пустым.");
             
@@ -29,7 +35,7 @@
             
             if (string.IsNullOrEmpty(user.Color))
                 throw new UseCaseException("Необходимо указать цвет пользователя.");
-
+            
             using (var db = new DataContext())
             {
                 var addedElem = db.Users.Add(user);

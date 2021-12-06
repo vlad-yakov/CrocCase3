@@ -34,14 +34,15 @@ namespace Api.Controllers.GetElems
                     Phone = user.Phone,
                     Color = user.Color
                 };
+                
+                result.Success.Success = true;
             }
             catch (Exception e)
             {
                 result.Success.Success = false;
                 result.Success.Reason.Add(e.Message);
             }
-
-            result.Success.Success = true;
+            
             return result;
         }
     }

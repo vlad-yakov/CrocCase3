@@ -23,7 +23,7 @@ namespace Services.UseCases.GetElem
             using (var db = new DataContext())
             {
                 var userElem = db.Users
-                    .Where(e => e.Id == userId)
+                    .Where(user => user.Id == userId && !user.Deleted)
                     .Select(e => new UserModel
                     {
                         Id = e.Id,

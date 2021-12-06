@@ -1,4 +1,5 @@
 ﻿using DataModel.Models.Linker;
+using Services.UseCases.AuthorizeAndCheckPermissions;
 
 namespace Services.UseCases.AddElem
 {
@@ -14,7 +15,8 @@ namespace Services.UseCases.AddElem
         /// Выполнить действие, подразумеваемое в описании Обьекта.
         /// </summary>
         /// <param name="linker">Информация о связи пользователя и проекта.</param>
-        public void TryExecute(LinkerUserProject linker)
+        /// <param name="login">Логин пользователя.</param>
+        public void TryExecute(LinkerUserProject linker, string login)
         {
             if (linker.ProjectId <= 0)
                 throw new UseCaseException("Идентификатор проекта не может быть меньше или равен нулю.");
@@ -24,8 +26,14 @@ namespace Services.UseCases.AddElem
             
             if (linker.RoleType != 1 && linker.RoleType !=99)
                 throw new UseCaseException("Необходимо указать роль пользователя.");
+            
+            var sysAdmin = new CheckSystemAdminByLogin().TryExecute(login);
+            var projectAdmin = new CheckCurrentProjectAdminByLogin().TryExecute(login, linker.ProjectId);
 
             
+            if (!(sysAdmin || projectAdmin))
+                throw new UseCaseException("Недостаточно прав.");
+
             using (var db = new DataContext())
             {
                 db.Linker.Add(linker);

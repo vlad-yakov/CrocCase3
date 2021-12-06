@@ -22,7 +22,7 @@ namespace Services.UseCases.GetElem
             using (var db = new DataContext())
             {
                 var projectElems = db.Projects
-                    .Where(e => e.Name.ToLower().Contains(partName.ToLower()));
+                    .Where(project => project.Name.ToLower().Contains(partName.ToLower()) && !project.Deleted);
                 
                 result.AddRange(projectElems);
             }

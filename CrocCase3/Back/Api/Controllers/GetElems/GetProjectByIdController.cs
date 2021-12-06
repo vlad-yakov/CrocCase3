@@ -34,6 +34,8 @@ namespace Api.Controllers.GetElems
                     EndDate = project.EndDate,
                     DaysPerWeek = project.DaysPerWeek
                 };
+                
+                result.Success.Success = true;
             }
             catch (Exception e)
             {
@@ -41,7 +43,6 @@ namespace Api.Controllers.GetElems
                 result.Success.Reason.Add(e.Message);
             }
 
-            result.Success.Success = true;
             return result;
         }
     }

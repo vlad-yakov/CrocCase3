@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Api.Models;
-using DataModel.Models.User;
 using Microsoft.AspNetCore.Mvc;
-using Services.UseCases.GetElem;
+using Services.UseCases.Authorize;
 
-namespace Api.Controllers.GetElems
+namespace Api.Controllers.Authorize
 {
     /// <summary>
     /// Контроллер, возвращающий все смены в проекте по данному идентификатору на заданном промежутке (Linker).
     /// </summary>
     [ApiController]
-    [Route("GetAllDutiesByProjectId")]
-    public class GetAllDutiesByProjectIdController : ControllerBase
+    [Route("Authorize")]
+    public class AuthorizeController : ControllerBase
     {
         /// <summary>
         /// Получить ответ от сервера.
@@ -23,25 +20,21 @@ namespace Api.Controllers.GetElems
         /// <param name="finish">Конец необходимого промежутка.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        public ResultMessage<List<DutyReturnModel>> Get(int projectId, DateTime start, DateTime finish)
+        public ResultMessage<string> Get(string login, string password)
         {
-            ResultMessage<List<DutyReturnModel>> result = new(); 
+            ResultMessage<string> result = new(); 
             try
             {
-                var dutiesGetByProjectIdService = new GetAllDutiesByProjectId();
-                result.Result = dutiesGetByProjectIdService
-                    .TryExecute(projectId, start, finish)
-                    .Select(duty => new DutyReturnModel
-                    {
-                        Id = duty.Id,
-                        Start = duty.Start,
-                        Finish = duty.Finish,
-                        GroupId = duty.GroupId,
-                        LinkerId = duty.LinkerId
-                    })
-                    .ToList();
+                var chechProfileService = new CheckProfile();
+                var checkProfile = chechProfileService
+                    .TryExecute(login, password);
+                if (!checkProfile)
+                {
+                    throw new Exception("Данного пользователя нет.");
+                }
                 
                 result.Success.Success = true;
+                result.Result = new TokenOperations().CreateToken(login) ;
             }
             catch (Exception e)
             {

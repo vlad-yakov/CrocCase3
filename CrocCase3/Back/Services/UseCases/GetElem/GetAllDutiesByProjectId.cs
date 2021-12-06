@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DataModel;
 using DataModel.Models.Duty;
-using DataModel.Models.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services.UseCases.GetElem
@@ -26,11 +25,11 @@ namespace Services.UseCases.GetElem
             using (var db = new DataContext())
             {
                 var users = db.Linker
-                    .Where(linker => linker.ProjectId == projectId)
+                    .Where(linker => linker.ProjectId == projectId && !linker.Deleted)
                     .Include(c => c.Duty)
                     .Select(x => x.Duty)
                     .FirstOrDefault()
-                    ?.Where(duty => duty.Start >= start && duty.Start <= finish);
+                    ?.Where(duty => duty.Start >= start && duty.Start <= finish && !duty.Deleted);
 
                 if (users == null)
                     throw new UseCaseException("Не найденно задач в данном временном промежутке.");

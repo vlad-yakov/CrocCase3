@@ -20,6 +20,7 @@ namespace DataModel.Models.User
                 .WithOne(t => t.User)
                 .HasForeignKey(p => p.UserId)
                 .HasPrincipalKey(t=>t.Id);
+            builder.HasAlternateKey(u => u.Login);
         }
     }
 }

@@ -7,28 +7,28 @@ using Services.UseCases.RemoveElem;
 namespace Api.Controllers.DeleteElems
 {
     /// <summary>
-    /// Контроллер, удаляющий проект.
+    /// Контроллер, удаляющий связующую запись в линкере.
     /// </summary>
     [ApiController]
-    [Route("RemoveProject")]
-    public class RemoveProjectController : ControllerBase
+    [Route("RemoveLinkerById")]
+    public class RemoveLinkerByIdController : ControllerBase
     {
         /// <summary>
         /// Получить ответ от сервера.
         /// </summary>
-        /// <param name="projectId">Идентификатор проекта, который нужно удалить.</param>
+        /// <param name="linkerId">Идентификатор смены, которую нужно удалить.</param>
         /// <param name="token">Токен пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        public SuccessMessage Get(int projectId, string token)
+        public SuccessMessage Get(int linkerId, string token)
         {
             var result = new SuccessMessage();
             
-            var projectRemoveService = new RemoveProject();
+            var linkerRemoveService = new RemoveLinkerById();
             try
             {
                 var userLogin = new TokenOperations().CheckToken(token);
-                projectRemoveService.TryExecute(projectId, userLogin);
+                linkerRemoveService.TryExecute(linkerId, userLogin);
                 result.Success = true;
             }
             catch (Exception e)

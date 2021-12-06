@@ -49,6 +49,11 @@ namespace DataModel.Models.User
         public bool Deleted { get; set; }
         
         /// <summary>
+        /// Показывает является ли данный пользователь системным администратором.
+        /// </summary>
+        public bool SystemAdmin { get; set; }
+
+        /// <summary>
         /// Список строк из линкера, связанных с данным пользователем.
         /// </summary>
         public List<LinkerUserProject> Linker { get; set; }

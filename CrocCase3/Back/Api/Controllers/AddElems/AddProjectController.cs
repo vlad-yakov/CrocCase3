@@ -1,4 +1,5 @@
 ﻿using System;
+using Api.Controllers.Authorize;
 using Api.Models;
 using DataModel.Models;
 using DataModel.Models.Project;
@@ -38,8 +39,10 @@ namespace Api.Controllers.AddElems
             var result = new ResultMessage<int>();
             try
             {
+                var userLogin = new TokenOperations().CheckToken(token);
                 var projectAddService = new AddProject();
-                result.Result = projectAddService.TryExecute(project);
+                result.Result = projectAddService.TryExecute(project, userLogin);
+                result.Success.Success = true;
             }
             catch (Exception e)
             {
@@ -47,7 +50,6 @@ namespace Api.Controllers.AddElems
                 result.Success.Reason.Add(e.Message);
             }
 
-            result.Success.Success = true;
             return result;
         }
     }
