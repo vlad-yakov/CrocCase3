@@ -27,6 +27,9 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //Сервис для удалённого доступа
+            services.AddCors(options => options.AddDefaultPolicy(
+                builder => builder.WithOrigins("http://localhost:8080"))); 
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Api", Version = "v1"}); });
         }
 
@@ -43,6 +46,9 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            //ПО для работы с удалённым клиентом
+            app.UseCors();
 
             app.UseAuthorization();
 
