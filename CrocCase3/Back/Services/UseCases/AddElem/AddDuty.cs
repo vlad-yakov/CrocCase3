@@ -39,16 +39,15 @@ namespace Services.UseCases.AddElem
             string userLogin;
             using (var db = new DataContext())
             {
-                var userLoginObj = db.Duties
-                    .Where(duty => duty.Id == dutyInput.Id)
-                    .Include(duty => duty.Linker)
-                    .Include(linker => linker.Linker.User)
+                var userLoginObj = db.Linker
+                    .Where(linker => linker.Id == dutyInput.LinkerId)
+                    .Include(linker => linker.User)
                     .FirstOrDefault();
 
                 if (userLoginObj == null)
                     throw new UseCaseException("Недостаточно прав.");
 
-                userLogin = userLoginObj.Linker.User.Login;
+                userLogin = userLoginObj.User.Login;
             }
             
             var sysAdmin = new CheckSystemAdminByLogin().TryExecute(login);

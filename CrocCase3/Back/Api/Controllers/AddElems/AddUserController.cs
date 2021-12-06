@@ -28,7 +28,7 @@ namespace Api.Controllers.AddElems
         /// <param name="token">Токен пользователя.</param>
         /// <returns>Ответ сервера с информацией о результативности выполнения задания.</returns>
         [HttpGet]
-        public ResultMessage<int> Get(string name, string email, string phone, string color, string login, string password, string token)
+        public ResultMessage<int> Get(string name, string email, string phone, string color, string login, string password, string token, bool sysAdmin)
         {
             var user = new UserModel
             {
@@ -38,14 +38,15 @@ namespace Api.Controllers.AddElems
                 Color = color,
                 Login = login,
                 Password = password,
+                SystemAdmin = sysAdmin
             };
             
             var result = new ResultMessage<int>();
             try
             {
-                var userLogin = new TokenOperations().CheckToken(token);
+                // var userLogin = new TokenOperations().CheckToken(token);
                 var userAddService = new AddUser();
-                result.Result = userAddService.TryExecute(user, userLogin);
+                result.Result = userAddService.TryExecute(user, String.Empty);
                 result.Success.Success = true;
             }
             catch (Exception e)
