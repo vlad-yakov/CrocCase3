@@ -1,6 +1,6 @@
 <template>
   <div id="graph">
-    <v-sheet height="54" color="grey lighten-4" class="d-flex">
+    <v-sheet app height="54" color="grey lighten-4" class="d-flex">
       <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
@@ -32,6 +32,7 @@
 
     <v-sheet height="84vh">
       <v-calendar
+        app
         locale="ru"
         ref="calendar"
         v-model="focus"
@@ -48,7 +49,7 @@
         @mousemove:time="mouseMove"
         @mouseup:time="endDrag"
         @mouseleave.native="cancelDrag"
-      >
+        ><!--по клику на сетке графика появляется график создания проекта-->
         <template #event="{ event, timed }">
           <div class="pl-1" v-html="getEventHTML(event, timed)"></div>
           <div
@@ -78,6 +79,7 @@
 <script>
 import Vuetify from "../plugins/vuetify";
 import Vue from "vue";
+import db from "@/main";
 
 export default Vue.component("graph", {
   // данные должны быть связаны с проектом
@@ -92,9 +94,9 @@ export default Vue.component("graph", {
     selectedOpen: false,
 
     focus: "",
-    events: [],
-    colors: ["#2196F3", "#3F51B5", "#673AB7"],
-    names: ["Meeting", "Holiday", "PTO"],
+    events: [], //метод для получения их с бд
+    colors: [], //метод для получения их с бд
+    names: [], //метод для получения их с бд
 
     dragEvent: null,
     dragStart: null,
@@ -144,6 +146,17 @@ export default Vue.component("graph", {
     setInterval(() => cal.updateTimes(), 60 * 1000);
   },
   methods: {
+    async giveEvents() {
+      //вызов события из бд
+      let snapshot = await db.collection("calEvent").get();
+      const events = [];
+      snapshot.forEach((doc) => {
+        let appData = doc.data();
+        appData.id = doc.id;
+        events.push(appData);
+      });
+      this.events = events;
+    },
     getEvents({ start, end }) {
       const events = [];
 
