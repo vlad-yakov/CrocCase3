@@ -29,7 +29,7 @@ namespace Services.UseCases.AuthorizeAndCheckPermissions
                     .Where(u => u.Login == login)
                     .Include(u => u.Linker)
                     .FirstOrDefault(project =>
-                        project.Linker.Any(linker => linker.ProjectId == projectId));
+                        project.Linker.Any(linker => linker.ProjectId == projectId && linker.RoleType == 99));
                 
                 if (users == null)
                     return false;
