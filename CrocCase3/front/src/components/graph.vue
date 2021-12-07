@@ -52,6 +52,7 @@
 				@mousemove:time="mouseMove"
 				@mouseup:time="endDrag"
 				@mouseleave.native="cancelDrag"
+				
 			><!--по клику на сетке графика появляется график создания проекта-->
 				<template #event="{ event, timed }">
 					<div class="pl-1" v-html="getEventHTML(event, timed)" @onckick="!duty"></div>
@@ -80,57 +81,206 @@
 				max-width="500"
 				v-model="selectedOpen"
 				:close-on-content-click="false"
-				:activator="selectedElement"
-			
-			>
+				:activator="selectedElement">
 				<v-card>
 					<v-container>
+						<h3>Дежурство</h3>
 						<v-form @submit.prevent="addEvent">
-							<!--Кнопка создания события у администратора проекта-->
-							<v-select
-								color="#00A460"
-								v-model="select"
-								:names="names"
-								name-text="name"
-								label="ФИО"
-								return-object
-								single-line
-							>
-							</v-select>
-							<v-text-field
-								color="#00A460"
-								v-model="start"
-								type="date"
-								label="Начало*"
-							></v-text-field>
-							<v-btn
-								type="time"
-							></v-btn>
-							<v-text-field
-								color="#00A460"
-								v-model="end"
-								type="date"
-								label="Окончание*"
-							></v-text-field>
-							<!--<v-text-field
-										v-model="color"
-										type="color"
-										label="Нажмите, чтобы открыть палитру"
-									></v-text-field>-->
-							<v-btn
-								type="submit"
-								color="#00A460"
-								small
-								@click.stop="dialog = false"
-							>
-								Создать
-							</v-btn>
+							<v-sheet>
+								<v-row dense>
+									<v-col
+										class="pa-3"
+										cols="3">
+										<h4>Сотрудник</h4>
+									</v-col>
+									
+									<v-col cols="9">
+										<v-select
+											dense
+											outlined
+											color="#00A460"
+											v-model="select"
+											:names="names"
+											name-text="name"
+											label="ФИО"
+											return-object>
+										</v-select>
+									</v-col>
+								</v-row>
+								
+								<v-row dense>
+									<v-col
+										class="pa-3"
+										cols="3">
+										<h4>Начало</h4>
+									</v-col>
+									
+									<v-col cols="9">
+										<v-text-field
+											dense
+											color="#00A460"
+											v-model="start"
+											type="datetime-local"
+										>
+										</v-text-field>
+									</v-col>
+								</v-row>
+								
+								<v-row dense>
+									<v-col
+										class="pa-3"
+										cols="3">
+										<h4>Окончание</h4>
+									</v-col>
+									
+									<v-col cols="9">
+										<v-text-field
+											dense
+											color="#00A460"
+											v-model="end"
+											type="datetime-local"
+										></v-text-field>
+									</v-col>
+								</v-row>
+								
+								<v-row dense>
+									<v-col
+										class="pa-3">
+										<h4>Повторять</h4>
+									</v-col>
+								
+									
+									
+										<v-btn-toggle
+											borderless
+											dense 
+											v-model="btnRatio"
+											class="mx-4"
+										>
+											<v-btn
+												borderless
+												class="marg"
+												small
+												outlined>
+												Никогда
+											</v-btn>
+											<v-btn
+												borderless
+												class="marg"
+												small
+												outlined>
+												Каждый день
+											</v-btn>
+											<v-btn
+												borderless
+												class="marg"
+												small
+												outlined>
+												Раз в неделю
+											</v-btn>
+											<v-btn
+												borderless
+												class="marg"
+												small
+												outlined>
+												Раз в месяц
+											</v-btn>
+										</v-btn-toggle>
+								</v-row>
+								
+								
+								<v-row dense>
+									<v-col
+										class="pa-3"
+										cols="3">
+										<h4>Закончить</h4>
+									</v-col>
+									
+									
+									<v-col dense cols="10">
+										<v-radio-group dense v-model="radioGroup">
+											
+											<v-radio style="align:center"
+												color="#00A460"
+												value
+											><template v-slot:label>
+												<span style="padding-left: 10px"><v-row align="baseline">После <v-text-field style="max-width: 100px; margin:5px" color="#00A460" dense outlined  v-model="recDuty" type="number"></v-text-field> дежурств</v-row></span>
+											</template>
+											</v-radio>
+								
+												<v-radio
+													color="#00A460"
+													value
+												><template v-slot:label>
+													<div style="padding-left: 10px"><v-row align="baseline">После <v-text-field color="#00A460" style="margin:5px" dense outlined width="10px" v-model="recCal" type="date"></v-text-field></v-row></div>
+												</template>
+												</v-radio>
+											
+										</v-radio-group>
+									</v-col>
+									
+								
+								</v-row>
+								
+								<v-row dense>
+									<v-col>
+										<v-btn
+											height="32px"
+											small
+											dark
+											color="#FF0000"
+											class="ma-1"
+											@click.stop="delAll = false">
+											Удалить всё
+										</v-btn>
+									</v-col>
+									
+									<v-col>
+										<v-btn
+											dark
+											height="32px"
+											small
+											color="#FF0000"
+											class="ma-1"
+											@click.stop="delOnce = false">
+											Удалить
+										</v-btn>
+									</v-col>
+									
+									<v-spacer></v-spacer>
+									
+									<v-col>
+										<v-btn
+											height="32px"
+											small
+											dark
+											color="#00A460"
+											class="ma-1"
+											@click.stop="keepProj = false">
+											Сохранить
+										</v-btn>
+									</v-col>
+									
+									<v-col>
+										<v-btn
+											@click="editProj = !editProj"
+											dark
+											height="32px"
+											small
+											color="#666666"
+											class="ma-1">
+											Отмена
+										</v-btn>
+									</v-col>
+								
+								</v-row>
+							</v-sheet>
 						</v-form>
 					</v-container>
 				</v-card>
 			</v-dialog>
-			
-			<!--         {{ lastEvent }} -->
+		
+		<!--         {{ lastEvent }} -->
 		</v-sheet>
 	</div>
 </template>
@@ -159,7 +309,7 @@ export default Vue.component("graph", {
 		focus: "",
 		events: [], //метод для получения их с бд
 		colors: ["blue","orange"], //метод для получения их с бд
-		names: ["Презентация","Встеча"], //метод для получения их с бд
+		names: ["Сергеев Дмитрий","Авдеев Андрей"], //метод для получения их с бд
 		
 		dragEvent: null,
 		dragStart: null,
@@ -453,6 +603,15 @@ export default Vue.component("graph", {
 
 <style lang="scss" scoped>
 
+
+
+h3 {
+	text-align: center;
+	color: #00A460;
+	font-size: 21px;
+	padding-bottom: 8px;
+}
+
 #graph {
 	background-color: #F5F5F5;
 }
@@ -539,4 +698,10 @@ export default Vue.component("graph", {
 		top: -9px;
 	}
 }
+
+.marg {
+	margin: 4px;
+	color: #000;
+}
+
 </style>
