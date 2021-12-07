@@ -131,27 +131,13 @@
 									</v-icon>
 								</v-btn>
 							</v-row>
-							
 							<v-list-item class="px-1" >
-								<v-ripple>
-									<v-list-item-content>
-										<v-list-item-title>{{}}</v-list-item-title>
-									</v-list-item-content>
-								</v-ripple>
+								<v-list-item-content>
+									<v-list-item-title v-for="userPr of usersPr" :key="userPr.id">{{userPr.name}}</v-list-item-title>
+								</v-list-item-content>
 							</v-list-item>
 							
 							<v-row dense>
-								<v-col>
-									<v-btn
-										height="32px"
-										small
-										dark
-										color="#FF0000"
-										class="ma-1"
-										@click.stop="delAll = false">
-										Удалить всё
-									</v-btn>
-								</v-col>
 								
 								<v-col>
 									<v-btn
@@ -165,6 +151,7 @@
 									</v-btn>
 								</v-col>
 								
+								<v-spacer></v-spacer>
 								<v-spacer></v-spacer>
 								
 								<v-col>
