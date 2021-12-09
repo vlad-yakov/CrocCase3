@@ -51,7 +51,7 @@ namespace Services.UseCases.EditElem
             var sysAdmin = new CheckSystemAdminByLogin().TryExecute(login);
             var projectAdmin = new CheckCurrentProjectAdminByLogin().TryExecute(login, projectId);
             
-            if (!(sysAdmin || projectAdmin) || userLogin != login)
+            if (!(sysAdmin || projectAdmin || userLogin == login))
                 throw new UseCaseException("Недостаточно прав.");
             
             using (var db = new DataContext())
